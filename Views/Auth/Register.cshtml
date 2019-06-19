@@ -1,0 +1,128 @@
+﻿@model chat_application.Models.RegisterRequest
+@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Register</title>
+    <style>
+            body{
+                margin:0;
+                padding:0;
+                background: #3C4147;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            #main{
+                background: #2D3238;
+                width: 320px;
+                padding: 10px;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                box-shadow: 5px 5px 5px 0 rgba(0,0,0,0,20);
+                transition: all 0.3s ease-in;
+            }
+
+            #main:hover{
+                box-shadow: 8px 8px 10px 0 rgba(0,0,0,0,50);
+            }
+
+            #logincontainer,
+            #registercontainer{
+                padding: 30px;
+            }
+
+            .form-control{
+                width: 100%;
+                margin-bottom: 10px;
+                box-sizing: border-box;
+            }
+
+            .inputbox{
+                height: 30px;
+                border: none;
+                padding: 5px;
+            }
+
+            .inputbox:focus{
+                outline-style: auto;
+                outline-width: 3px;
+                outline-color: #01A2C3;
+            }
+
+            .btn{
+                width: 100%;
+                height: 35px;
+                border: none;
+                transform: uppercase;
+                cursor: pointer;
+            }
+
+            .btn-primary{
+                background: #01A2C3;
+                color: #fff;
+            }
+
+            #login-tab,
+            #register-tab{
+                padding: 10px;
+                width: 50%;
+                display: inline-block;
+                box-sizing: border-box;
+                text-align: center;
+                color: #fff;
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+
+            .active{
+                background: #01A2C3;
+            }
+
+            .textcenter{
+                text-align: center;
+            }
+
+            .signuptxt,
+            .forgettxt{
+                font-size: 12px;
+                margin: 10px 0;
+                color: #fff;
+            }
+
+            .link,
+            .active,
+            .link:visited{
+                text-decoration: none;
+                color: #2196F3;
+            }
+        </style>
+</head>
+<body>
+    <main id="main">
+        <form asp-action="Register" asp-controller="Account" method="post">
+            <div asp-validation-summary="All"></div>
+            <div class="form-group">
+                <input type="text" class="form-control inputbox" asp-for="@Model.Email" /><br />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control inputbox" asp-for="@Model.UserName" /><br />
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control inputbox" asp-for="@Model.Password" /><br />
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Save" />
+            </div>
+            <div class="textcenter signuptxt">Already have an account? <a href="#" class="link loginlink">Login</a></div>
+        </form>
+    </main>
+</body>
+</html>
