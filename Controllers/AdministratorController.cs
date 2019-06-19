@@ -25,9 +25,6 @@ namespace chat_application.Controllers
         [Route("administrator/dashboard")]
         public IActionResult Dashboard()
         {
-            
-            var data = context.HttpContext.User.Identity.Name;
-            ViewBag.data = db.Users.ToList();
             return View();
         }
     }
