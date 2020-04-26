@@ -1,4 +1,5 @@
-﻿
+﻿@model IEnumerable<chat_application.Identity.AppIdentityUser>
+
 @{
     Layout = null;
 }
@@ -36,7 +37,22 @@
         </div>
       </div>
       <div class="inbox_chat">
-        <div id="users"></div>
+        <div id="users">
+          @foreach (var item in Model)
+          {
+              <div class='chat_list active_chat' id='@item.Email'>
+                <div class='chat_people'>
+                  <div class='chat_img'> <img src='https://ptetutorials.com/images/user-profile.png' alt='sunil'>
+                  </div>
+                  <div class='chat_ib'><h5> @item.Email      
+                    <img src='../upload/icon/red.png' style='width:10px; height:10px;'></h5>
+                  </div>
+                </div>
+              </div>
+              
+          }
+        </div>
+        
       </div>
     </div>
     <div class="mesgs">

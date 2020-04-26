@@ -49,6 +49,7 @@ namespace chat_application.Hubs
         {
             var name = accessor.HttpContext.User.Identity.Name;
             string connectionId = _connections.Find(user);
+            
             dbContext.Messages.Add(CreateMessage(user,message));
             await dbContext.SaveChangesAsync();
 
@@ -83,7 +84,7 @@ namespace chat_application.Hubs
             string name = accessor.HttpContext.User.Identity.Name;
             _connections.Remove(name, Context.ConnectionId);
 
-            await Clients.All.SendAsync("UserConnected", _connections.GetAllNames());
+            await Clients.All.SendAsync("UserDisconnected", name);
             await base.OnDisconnectedAsync(ex);
         }
 

@@ -18,12 +18,7 @@ connection.on("ReceiveMessage", function(username ,message) {
         document.getElementById("messages").innerHTML += message;
     } else { //incoming
         var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        
-
-        
         var message;
-        
-
         message = "<div class='incoming_msg'><div class='incoming_msg_img'>";
         message += "  <img src='https://ptetutorials.com/images/user-profile.png' alt='sunil'><p>"+ username +"</p> </div>";
         message += "<div class='received_msg'><div class='received_withd_msg'><p>" + msg + "<p>";
@@ -39,23 +34,26 @@ connection.on("UserConnnectName", function(username){
 });
 
 connection.on("UserConnected", function(connectionId){
-    document.getElementById("users").innerHTML = "";
     var nameList;
     connectionId.forEach(function(item) {
-        nameList = "<div class='chat_list active_chat'><div class='chat_people'>";
-        nameList += "<div class='chat_img'> <img src='https://ptetutorials.com/images/user-profile.png' alt='sunil'>";
-        nameList += "</div><div class='chat_ib'><h5>" + item + "</h5></div></div></div>";
-        document.getElementById("users").innerHTML += nameList;
+        $("#users").children().each(function(id, element) {
+            if(element.id == item) {
+                console.log(element.id);
+                $(element).children().children()[1].innerHTML = "<h5>"+ item +"    <img src='../upload/icon/green.png' style='width:10px; height:10px;'></h5>";
+            }
+        })
     });
 });
 
 connection.on("UserDisconnected", function(connectionId) {
-    var groupElement = document.getElementById("group");
-    for(var i = 0; i< groupElement.length; i++){
-        if(groupElement.options[i].value == connectionId){
-            groupElement.remove(i);
+    var groupElement = document.getElementById("users");
+    
+    $("#users").children().each(function(id, element) {
+        if(element.id == connectionId) {
+            console.log(element.id);
+            $(element).children().children()[1].innerHTML = "<h5>"+ connectionId +"    <img src='../upload/icon/red.png' style='width:10px; height:10px;'></h5>";
         }
-    }
+    })
 });
 
 connection.start().catch(function(err) {

@@ -11,6 +11,7 @@ namespace chat_application.Identity
         public string Username { get; set; }
         [MaxLength(144)]
         public string MessageContent { get; set; }
+        public bool isRead { get; set; }
         public DateTime MessageDate { get; set; }
     }
 }

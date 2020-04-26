@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using chat_application.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace chat_application.Controllers
@@ -14,18 +15,23 @@ namespace chat_application.Controllers
     {
         private readonly IHttpContextAccessor context;
         private readonly ChatDbContext db;
+        private readonly UserManager<AppIdentityUser> userManager;
 
-
-        public AdministratorController(IHttpContextAccessor context, ChatDbContext db)
+        public AdministratorController(
+            IHttpContextAccessor context, 
+            ChatDbContext db,
+            UserManager<AppIdentityUser> userManager)
         {
             this.context = context;
             this.db = db;
+            this.userManager = userManager;
         }
 
         [Route("administrator/dashboard")]
         public IActionResult Dashboard()
         {
-            return View();
+            var deneme = userManager.Users.ToList();
+            return View(deneme);
         }
     }
 }
