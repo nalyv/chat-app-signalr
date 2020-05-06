@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using chat_application.Identity;
+using chat_application.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -27,11 +28,33 @@ namespace chat_application.Controllers
             this.userManager = userManager;
         }
 
-        [Route("administrator/dashboard")]
-        public IActionResult Dashboard()
+        [Route("administrator/dashboard/{receiverName}")]
+        public IActionResult Dashboard(string receiverName = "All")
         {
-            var deneme = userManager.Users.ToList();
-            return View(deneme);
+            return View(BuildDirectMessage(receiverName));
+        }
+
+        public DashboardModel BuildDirectMessage(string receiverName) 
+        {
+            DashboardModel model = new DashboardModel
+            {
+                users = userManager.Users.ToList(),
+                currentUserName = context.HttpContext.User.Identity.Name
+            };
+
+            if(receiverName == "All")
+            {
+                model.messages = db.Messages.Where(x => x.ReceiverName == "All").ToList();
+            }
+            else 
+            {
+                model.messages = db.Messages
+                    .Where(x => (x.SenderName == model.currentUserName || x.SenderName == receiverName) &&
+                                (x.ReceiverName == receiverName || x.ReceiverName == model.currentUserName))
+                    .ToList();
+            }
+
+            return model;
         }
     }
 }

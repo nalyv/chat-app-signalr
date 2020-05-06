@@ -5,53 +5,79 @@ var connection = new signalR.HubConnectionBuilder()
                         .build();
 
 var CurrentUserName = '';
+var SelectedUserName = document.URL.split("/");
+SelectedUserName = SelectedUserName[SelectedUserName.length-1];
 
-connection.on("ReceiveMessage", function(username ,message) {
-    if(this.CurrentUserName == username) {//outgoing
-        var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    
-        var message;
+var unReadMessages = [];
 
-        message = "<div class='outgoing_msg'><div class='sent_msg'>";
-        message += "<p>" + msg + "</p></div></div>";
+connection.on("ReceiveMessage", function(senderName, receiverName ,message) {
+
+    if(this.CurrentUserName == senderName) {//outgoing
+       
+        document.getElementById("messages").innerHTML += 
+        "<div class='outgoing_msg'>" +
+            "<div class='sent_msg'>" +
+                "<p>" + message + "</p>" +
+            "</div>" +
+        "</div>";
+    } 
+    else if(SelectedUserName === receiverName || 
+        (this.CurrentUserName == receiverName && SelectedUserName == senderName)) { //incoming
+        document.getElementById("messages").innerHTML += 
+        "<div class='incoming_msg'>" +
+            "<div class='incoming_msg_img'>"+
+                "<img src='https://ptetutorials.com/images/user-profile.png'>" +
+                "<p>" + senderName + "</p>" + 
+            "</div>" +
+            "<div class='received_msg'>" +
+                "<div class='received_withd_msg'>" +
+                    "<p>" + message + "</p>" +
+                "</div>" +
+            "</div>" + 
+        "</div>";
         
-        document.getElementById("messages").innerHTML += message;
-    } else { //incoming
-        var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-        var message;
-        message = "<div class='incoming_msg'><div class='incoming_msg_img'>";
-        message += "  <img src='https://ptetutorials.com/images/user-profile.png' alt='sunil'><p>"+ username +"</p> </div>";
-        message += "<div class='received_msg'><div class='received_withd_msg'><p>" + msg + "<p>";
-        message += "</div></div></div>"; 
-
-        document.getElementById("messages").innerHTML += message;
+        readMessages(senderName, receiverName);
     }
-    
+    else { 
+        unreadColorizer(senderName);
+        unReadMessages.push({senderName, receiverName, message});
+    }
 });
 
 connection.on("UserConnnectName", function(username){
     this.CurrentUserName = username;
+
+    readMessages(this.CurrentUserName, SelectedUserName);
 });
 
 connection.on("UserConnected", function(connectionId){
-    var nameList;
     connectionId.forEach(function(item) {
         $("#users").children().each(function(id, element) {
             if(element.id == item) {
-                console.log(element.id);
-                $(element).children().children()[1].innerHTML = "<h5>"+ item +"    <img src='../upload/icon/green.png' style='width:10px; height:10px;'></h5>";
+                $(element).children().children()[0].innerHTML = 
+                "<div class='chat_img'>" + 
+                    "<img src='https://ptetutorials.com/images/user-profile.png'>" +
+                "</div>" +
+                '<h5 style="cursor:pointer" name="SelectUser" onclick="SelectUser(\''+item+'\')">' +
+                    item +
+                "</h5>" +
+                "<img src='../../upload/icon/green.png' style='width:10px; height:10px;'>";
             }
         })
     });
 });
 
 connection.on("UserDisconnected", function(connectionId) {
-    var groupElement = document.getElementById("users");
-    
     $("#users").children().each(function(id, element) {
         if(element.id == connectionId) {
-            console.log(element.id);
-            $(element).children().children()[1].innerHTML = "<h5>"+ connectionId +"    <img src='../upload/icon/red.png' style='width:10px; height:10px;'></h5>";
+            $(element).children().children()[0].innerHTML = 
+            "<div class='chat_img'>" + 
+                "<img src='https://ptetutorials.com/images/user-profile.png'>" +
+            "</div>" +
+            '<h5 style="cursor:pointer" name="SelectUser" onclick="SelectUser(\''+connectionId+'\')">' +
+                connectionId +
+            "</h5>" +
+            "<img src='../../upload/icon/red.png' style='width:10px; height:10px;'>";
         }
     })
 });
@@ -63,24 +89,28 @@ connection.start().catch(function(err) {
 
 document.getElementById("sendButton").addEventListener("click", function(event) {
     var message = document.getElementById("message").value;
-    console.log(message);
-
-    if(!message.indexOf("pm: ")) {
-
-        message = message.replace("pm: ",'');
-        var user = message.substring(0,message.indexOf(" "));
-        message = message.replace(user+" ",'');
-
-        connection.invoke("SendMessageToUser", user, message).catch(function (err) {
-            return console.error(err.toString());
-        });
-
-    } else {
-        connection.invoke("SendMessageToAll", user, message).catch(function (err) {
+    
+    if(SelectedUserName == "All") {
+        connection.invoke("SendMessageToAll", SelectedUserName, message).catch(function (err) {
             return console.error(err.toString());
         });
     }
-    
+    else {
+        connection.invoke("SendMessageToUser", SelectedUserName, message).catch(function (err) {
+            return console.error(err.toString());
+        });
+
+        readMessages(SelectedUserName, this.CurrentUserName);
+        
+        document.getElementById("messages").innerHTML += 
+        "<div class='outgoing_msg'>" +
+            "<div class='sent_msg'>" +
+                "<p>" + message + "</p>" +
+            "</div>" +
+        "</div>";
+    }
+
+    document.getElementById("message").value="";
     event.preventDefault();
 });
 
@@ -90,3 +120,31 @@ document.getElementById("joinGroup").addEventListener("click", function(event) {
     });
     event.preventDefault();
 });
+
+function SelectUser(userName) {
+    SelectedUserName = userName;
+    window.location.href = userName;
+};
+
+function readMessages(senderName,receiverName) {
+    unreadUnColorizer(senderName);
+    connection.invoke("ReadMessages", senderName, receiverName).catch(function(err){
+        return console.error(err.toString());
+    });
+};
+
+function unreadColorizer(senderName) {
+    $("#users").children().each(function(id, element) {
+        if(element.id == senderName) {
+            $(element)[0].style.backgroundColor = "#b96d90";
+        }
+    });
+};
+
+function unreadUnColorizer(senderName) {
+    $("#users").children().each(function(id, element) {
+        if(element.id == senderName) {
+            $(element)[0].style.backgroundColor = "";
+        }
+    });
+};

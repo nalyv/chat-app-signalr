@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using chat_application.Identity;
 using Microsoft.AspNetCore.Authorization;
@@ -31,13 +32,13 @@ namespace chat_application.Hubs
            this.signInManager = signInManager;
            this.accessor = accessor;
         }
-        public async Task SendMessageToAll(string user,string message)
+        public async Task SendMessageToAll(string receiverName, string message)
         {
-            var name = accessor.HttpContext.User.Identity.Name;
-            dbContext.Messages.Add(CreateMessage(user,message));
+            var senderName = accessor.HttpContext.User.Identity.Name;
+            dbContext.Messages.Add(CreateMessage(senderName, receiverName, message));
 
             await dbContext.SaveChangesAsync();
-            await Clients.All.SendAsync("ReceiveMessage", name, message);
+            await Clients.All.SendAsync("ReceiveMessage", senderName, receiverName, message);
         }
 
         public Task SendMessageToCaller(string message)
@@ -45,18 +46,18 @@ namespace chat_application.Hubs
             return Clients.Caller.SendAsync("ReceiveMessage", message);
         }
 
-        public async Task SendMessageToUser(string user, string message)
+        public async Task SendMessageToUser(string receiverName, string message)
         {
-            var name = accessor.HttpContext.User.Identity.Name;
-            string connectionId = _connections.Find(user);
+            var senderName = accessor.HttpContext.User.Identity.Name;
+            string connectionId = _connections.Find(receiverName);
             
-            dbContext.Messages.Add(CreateMessage(user,message));
+            dbContext.Messages.Add(CreateMessage(senderName, receiverName,message));
             await dbContext.SaveChangesAsync();
 
             if(connectionId == "")
                 await Clients.Caller.SendAsync("ReceiveMessage", message);
             else
-                await Clients.Client(connectionId).SendAsync("ReceiveMessage", name, message);
+                await Clients.Client(connectionId).SendAsync("ReceiveMessage", senderName, receiverName, message);
         }
 
         public Task JoinGroup(string group)
@@ -88,13 +89,30 @@ namespace chat_application.Hubs
             await base.OnDisconnectedAsync(ex);
         }
 
-        public Message CreateMessage(string Username, string MessageContent)
+        public void ReadMessages(string senderName, string receiverName) 
+        {
+            List<Message> messages = dbContext.Messages
+                .Where(x=> x.SenderName == senderName &&
+                       x.ReceiverName == receiverName &&
+                       x.isRead == false)
+                .ToList();
+            
+            foreach(Message msg in messages)
+            {
+                msg.isRead = true;
+                dbContext.Messages.Update(msg);
+            }
+            dbContext.SaveChanges();
+        }
+        public Message CreateMessage(string senderName, string receiverName, string MessageContent)
         {
             return new Message()
             {
-                Username = Username,
+                SenderName = senderName,
+                ReceiverName = receiverName,
                 MessageContent = MessageContent,
-                MessageDate = DateTime.Now
+                MessageDate = DateTime.Now,
+                isRead = false
             };
         }
     }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<chat_application.Identity.AppIdentityUser>
+﻿@model chat_application.Models.DashboardModel
 
 @{
     Layout = null;
@@ -37,19 +37,30 @@
         </div>
       </div>
       <div class="inbox_chat">
+
         <div id="users">
-          @foreach (var item in Model)
+          <div class='chat_list active_chat'  id='All'>
+            <div class='chat_people'>
+              <div class='chat_ib'>
+                <h5 style="cursor:pointer" name="SelectUser" onclick="SelectUser('All')">Broadcast</h5>
+              </div>
+            </div>
+          </div>
+          @foreach (var item in Model.users)
           {
               <div class='chat_list active_chat' id='@item.Email'>
                 <div class='chat_people'>
-                  <div class='chat_img'> <img src='https://ptetutorials.com/images/user-profile.png' alt='sunil'>
-                  </div>
-                  <div class='chat_ib'><h5> @item.Email      
-                    <img src='../upload/icon/red.png' style='width:10px; height:10px;'></h5>
+                  <div class='chat_ib'>
+                    <div class='chat_img'> 
+                      <img src='https://ptetutorials.com/images/user-profile.png'>
+                    </div>
+                    <h5 style="cursor:pointer" name="SelectUser" onclick="SelectUser('@item.Email')"> 
+                      @item.Email
+                    </h5>
+                    <img src='../../upload/icon/red.png' style='width:10px; height:10px;'>
                   </div>
                 </div>
               </div>
-              
           }
         </div>
         
@@ -57,7 +68,52 @@
     </div>
     <div class="mesgs">
       <div class="msg_history">
-        <div id="messages"></div>
+        <div id="messages">
+          @foreach (var item in Model.messages.Where(x=>x.isRead == true || x.SenderName == Model.currentUserName).ToList())
+          {
+              @if(item.SenderName == Model.currentUserName) 
+              {
+                <div class='outgoing_msg'>
+                  <div class='sent_msg'>
+                    <p>@item.MessageContent</p>
+                  </div>
+                </div>
+              }
+              else 
+              {
+                <div class='incoming_msg'>
+                  <div class='incoming_msg_img'>
+                    <img src='https://ptetutorials.com/images/user-profile.png'><p>@item.SenderName</p>
+                  </div>
+                  <div class='received_msg'>
+                    <div class='received_withd_msg'>
+                      <p>@item.MessageContent</p>
+                    </div>
+                  </div>
+                </div>
+              }
+          }
+          @if(Model.messages.Where(x=> x.isRead == false && x.SenderName != Model.currentUserName).ToList().Count() > 0) 
+          {
+            <hr/>
+            <div style="text-align:center;"><p>Okunmamis @Model.messages.Where(x=> x.isRead == false && x.SenderName != Model.currentUserName).ToList().Count() mesaj mevcut!!</p></div>
+            <hr/>
+            @foreach (var item in Model.messages.Where(x=>x.isRead == false && x.SenderName != Model.currentUserName).ToList())
+            {
+                
+              <div class='incoming_msg'>
+                <div class='incoming_msg_img'>
+                  <img src='https://ptetutorials.com/images/user-profile.png'><p>@item.SenderName</p>
+                </div>
+                <div class='received_msg'>
+                  <div class='received_withd_msg'>
+                    <p>@item.MessageContent</p>
+                  </div>
+                </div>
+              </div>
+            }
+          }
+        </div>
       </div>
       <div class="type_msg">
         <div class="input_msg_write">
@@ -67,9 +123,6 @@
       </div>
     </div>
   </div>
-  
-  
-  <p class="text-center top_spac"> Design by <a target="_blank" href="#">Sunil Rajput</a></p>
   
 </div></div>
 </body>

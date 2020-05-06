@@ -40,7 +40,7 @@ namespace chat_application.Controllers
         {
             var user = new AppIdentityUser
             {
-                UserName = model.Email,
+                UserName = model.UserName,
                 Email = model.Email,
             };
 
@@ -77,7 +77,7 @@ namespace chat_application.Controllers
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, true);
             if (result.Succeeded)
             {
-                return Redirect("~/administrator/dashboard");
+                return Redirect("~/administrator/dashboard/All");
             }
 
             return View(model);
