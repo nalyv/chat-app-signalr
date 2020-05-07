@@ -77,7 +77,7 @@ namespace chat_application.Controllers
             var result = await signInManager.PasswordSignInAsync(model.Email, model.Password, false, true);
             if (result.Succeeded)
             {
-                return Redirect("~/administrator/dashboard/All");
+                return Redirect("~/administrator/dashboard/everyone/All");
             }
 
             return View(model);

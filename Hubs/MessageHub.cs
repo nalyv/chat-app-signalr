@@ -35,10 +35,10 @@ namespace chat_application.Hubs
         public async Task SendMessageToAll(string receiverName, string message)
         {
             var senderName = accessor.HttpContext.User.Identity.Name;
-            dbContext.Messages.Add(CreateMessage(senderName, receiverName, message));
+            dbContext.Messages.Add(CreateMessage(senderName, receiverName, message, true));
 
             await dbContext.SaveChangesAsync();
-            await Clients.All.SendAsync("ReceiveMessage", senderName, receiverName, message);
+            await Clients.All.SendAsync("ReceiveMessage", "everyone", senderName, receiverName, message);
         }
 
         public Task SendMessageToCaller(string message)
@@ -51,28 +51,38 @@ namespace chat_application.Hubs
             var senderName = accessor.HttpContext.User.Identity.Name;
             string connectionId = _connections.Find(receiverName);
             
-            dbContext.Messages.Add(CreateMessage(senderName, receiverName,message));
+            dbContext.Messages.Add(CreateMessage(senderName, receiverName,message, false));
             await dbContext.SaveChangesAsync();
 
             if(connectionId == "")
                 await Clients.Caller.SendAsync("ReceiveMessage", message);
             else
-                await Clients.Client(connectionId).SendAsync("ReceiveMessage", senderName, receiverName, message);
+                await Clients.Client(connectionId).SendAsync("ReceiveMessage", "pm", senderName, receiverName, message);
         }
 
-        public Task JoinGroup(string group)
+        public Task JoinGroup(string group, string userName)
         {
-            return Groups.AddToGroupAsync(Context.ConnectionId, group);
+            string connectionId = _connections.Find(userName);
+            CreateGroupMember(group, userName);
+
+            return Groups.AddToGroupAsync(connectionId, group);
         }
 
-        public Task SendMessageToGroup(string group, string message)
+        public async Task SendMessageToGroup(string group, string message)
         {
-            return Clients.Group(group).SendAsync("ReceiveMessage", message);
+            var senderName = accessor.HttpContext.User.Identity.Name;
+
+            dbContext.Messages.Add(CreateMessage(senderName, group, message, false));
+            await dbContext.SaveChangesAsync();
+
+            await Clients.Group(group).SendAsync("ReceiveMessage", "group", senderName, group, message);
         }
         public override async Task OnConnectedAsync()
         {
             string name = accessor.HttpContext.User.Identity.Name;
             _connections.Add(name,Context.ConnectionId);
+
+            SetMemberAfterConnection(name);
 
             await Clients.Client(Context.ConnectionId).SendAsync("UserConnnectName", name);
 
@@ -104,7 +114,8 @@ namespace chat_application.Hubs
             }
             dbContext.SaveChanges();
         }
-        public Message CreateMessage(string senderName, string receiverName, string MessageContent)
+        public Message CreateMessage(string senderName, string receiverName,
+                                    string MessageContent, bool isRead)
         {
             return new Message()
             {
@@ -112,8 +123,48 @@ namespace chat_application.Hubs
                 ReceiverName = receiverName,
                 MessageContent = MessageContent,
                 MessageDate = DateTime.Now,
-                isRead = false
+                isRead = isRead
             };
+        }
+
+        public void CreateGroupMember(string group, string userName)
+        {
+            AppIdentityUser userId = GetUser(userName);
+
+            Group groupId = dbContext.Groups
+                        .Where(x=> x.Name == group)
+                        .FirstOrDefault();
+
+            UserGroup member = new UserGroup
+            {
+                User = userId,
+                Group = groupId
+            };
+
+            dbContext.UserGroups.Add(member);
+            dbContext.SaveChanges();
+        }
+
+        public void SetMemberAfterConnection(string userName)
+        {
+            AppIdentityUser user = GetUser(userName);
+            List<UserGroup> userGroups = dbContext.UserGroups
+                    .Where(x=> x.User == user)
+                    .ToList();
+            List<Group> groups = dbContext.Groups
+                    .Where(x=> userGroups.Any(s=> s.Group == x))
+                    .ToList();
+
+            foreach(Group item in groups)
+            {
+                string connectionId = _connections.Find(userName);
+                Groups.AddToGroupAsync(connectionId, item.Name);
+            }
+        }
+
+        public AppIdentityUser GetUser(string name)
+        {
+            return userManager.Users.Where(x=> x.UserName == name).FirstOrDefault();
         }
     }
 }

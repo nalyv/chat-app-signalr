@@ -20,7 +20,7 @@
 </head>
 <body>
 <div class="container">
-<h3 class=" text-center">Messaging</h3>
+<h3 class=" text-center" id="title">Messaging</h3>
 <div class="messaging">
   <div class="inbox_msg">
     <div class="inbox_people">
@@ -42,28 +42,70 @@
           <div class='chat_list active_chat'  id='All'>
             <div class='chat_people'>
               <div class='chat_ib'>
-                <h5 style="cursor:pointer" name="SelectUser" onclick="SelectUser('All')">Broadcast</h5>
+                <h5 style="cursor:pointer" name="SelectBroadcast" onclick="SelectBroadcast('All')">Broadcast</h5>
               </div>
             </div>
           </div>
           @foreach (var item in Model.users)
           {
-              <div class='chat_list active_chat' id='@item.Email'>
+              <div class='chat_list active_chat' id='@item.UserName'>
                 <div class='chat_people'>
                   <div class='chat_ib'>
                     <div class='chat_img'> 
                       <img src='https://ptetutorials.com/images/user-profile.png'>
                     </div>
-                    <h5 style="cursor:pointer" name="SelectUser" onclick="SelectUser('@item.Email')"> 
-                      @item.Email
+                    <h5 style="cursor:pointer" name="SelectUser" onclick="SelectUser('@item.UserName')"> 
+                      @item.UserName
                     </h5>
-                    <img src='../../upload/icon/red.png' style='width:10px; height:10px;'>
+                    <img src='../../../upload/icon/red.png' style='width:10px; height:10px;'>
                   </div>
                 </div>
               </div>
           }
         </div>
-        
+
+        @* MEMBER GROUPS *@
+        <div id="groups">
+          <hr/>
+                <h5>MEMBER GROUPS</h5>
+          <hr/>
+          @foreach (var item in Model.memberGroups)
+          {
+            <div class='chat_list active_chat' id='@item.Name'>
+              <div class='chat_people'>
+                <div class='chat_ib'>
+                  <div class='chat_img'> 
+                    <img src="@Url.Content("../../../upload/" + item.Name +".png")">
+                  </div>
+                  <h5 style="cursor:pointer" name="SelectGroup" onclick="SelectGroup('@item.Name')"> 
+                    @item.Name 
+                  </h5>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+
+        @* DISCOVER GROUPS *@
+        <div id="users">
+          <hr/>
+                <h5>DISCOVER GROUPS</h5>
+          <hr/>
+          @foreach (var item in Model.groups.Where(x=> !Model.memberGroups.Contains(x)).ToList())
+          {
+            <div class='chat_list active_chat' id='@item.Name'>
+              <div class='chat_people'>
+                <div class='chat_ib'>
+                  <div class='chat_img'> 
+                    <img src="@Url.Content("../../../upload/" + item.Name +".png")">
+                  </div>
+                  <h5> @item.Name </h5><h8 style="border-style: groove; margin-left: 5px;">private</h8>
+                  <h6 style="cursor:pointer; margin-left: 10px; border: 2px;" id="JoinGroup" onclick="JoinGroup('@item.Name')">JOIN</h6>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
       </div>
     </div>
     <div class="mesgs">

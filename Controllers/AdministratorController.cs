@@ -28,25 +28,31 @@ namespace chat_application.Controllers
             this.userManager = userManager;
         }
 
-        [Route("administrator/dashboard/{receiverName}")]
-        public IActionResult Dashboard(string receiverName = "All")
+        [Route("administrator/dashboard/{type}/{receiverName}")]
+        public IActionResult Dashboard(string type, string receiverName)
         {
-            return View(BuildDirectMessage(receiverName));
+            return View(BuildDirectMessage(type, receiverName));
         }
 
-        public DashboardModel BuildDirectMessage(string receiverName) 
+        public DashboardModel BuildDirectMessage(string type, string receiverName) 
         {
             DashboardModel model = new DashboardModel
             {
                 users = userManager.Users.ToList(),
-                currentUserName = context.HttpContext.User.Identity.Name
+                currentUserName = context.HttpContext.User.Identity.Name,
+                groups = db.Groups.ToList(),
+                memberGroups = GetMemberGroups(GetCurrentUser())
             };
 
-            if(receiverName == "All")
+            if(type == "everyone")
             {
                 model.messages = db.Messages.Where(x => x.ReceiverName == "All").ToList();
             }
-            else 
+            else if(type == "group")
+            {
+                model.messages = db.Messages.Where(x => x.ReceiverName == receiverName).ToList();
+            }
+            else
             {
                 model.messages = db.Messages
                     .Where(x => (x.SenderName == model.currentUserName || x.SenderName == receiverName) &&
@@ -55,6 +61,18 @@ namespace chat_application.Controllers
             }
 
             return model;
+        }
+
+        public AppIdentityUser GetCurrentUser()
+        {
+            string userName = context.HttpContext.User.Identity.Name;
+            return userManager.Users.Where(x=> x.UserName == userName).FirstOrDefault();
+        }
+        public List<Group> GetMemberGroups(AppIdentityUser user)
+        {
+            List<UserGroup> userGroups = db.UserGroups.Where(x=> x.User == user).ToList();
+
+            return db.Groups.Where(x=> userGroups.Any(s=> s.Group == x)).ToList();
         }
     }
 }

@@ -1,5 +1,5 @@
 + 1 online status kirmizi/yesil. butun kullanicilar listelenecek. disconnect olanlar kirmizi. connect olanlar yesil
-2 sol taraftan tiklanilan kullaniciyla olan mesajlari getirme db'den
-3 grup olusturma ve kullanici ekleme arayuzu
-4 sol taraf en uste gruplar seklesi eklenecek. tiklanilan guruba ait mesajlar sag tarafta listelenecek ve gruba mesaj atilabilinecek
-5 online olmayan kullanici tekrar girdiginde okunmamis mesajlari gorucek (okundu/okunmadi olayi)
++ sol taraftan tiklanilan kullaniciyla olan mesajlari getirme db'den
++ grup olusturma ve kullanici ekleme arayuzu
++ sol taraf en uste gruplar seklesi eklenecek. tiklanilan guruba ait mesajlar sag tarafta listelenecek ve gruba mesaj atilabilinecek
++ online olmayan kullanici tekrar girdiginde okunmamis mesajlari gorucek (okundu/okunmadi olayi)

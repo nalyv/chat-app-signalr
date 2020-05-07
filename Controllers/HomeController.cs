@@ -6,7 +6,7 @@ namespace chat_application.Controllers
     {
         public IActionResult Index()
         {
-            return new RedirectToActionResult("Dashboard", "Administrator", new {receiverName = "All"});
+            return new RedirectToActionResult("Dashboard", "Administrator", new {type ="everyone", receiverName = "All"});
         }
     }
 }
