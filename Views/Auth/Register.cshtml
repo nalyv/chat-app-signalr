@@ -110,18 +110,18 @@
         <form asp-action="Register" asp-controller="Auth" method="post">
             <div asp-validation-summary="All"></div>
             <div class="form-group">
-                <input type="text" class="form-control inputbox" asp-for="@Model.Email" /><br />
+                <input type="text" placeholder="Email" class="form-control inputbox" asp-for="@Model.Email" /><br />
             </div>
             <div class="form-group">
-                <input type="text" class="form-control inputbox" asp-for="@Model.UserName" /><br />
+                <input type="text" placeholder="Username" class="form-control inputbox" asp-for="@Model.UserName" /><br />
             </div>
             <div class="form-group">
-                <input type="password" class="form-control inputbox" asp-for="@Model.Password" /><br />
+                <input type="password" placeholder="Password" class="form-control inputbox" asp-for="@Model.Password" /><br />
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-primary" value="Save" />
             </div>
-            <div class="textcenter signuptxt">Already have an account? <a href="#" class="link loginlink">Login</a></div>
+            <div class="textcenter signuptxt">Already have an account? <a href="/administrator/login" class="link loginlink">Login</a></div>
         </form>
     </main>
 </body>

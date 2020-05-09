@@ -1,5 +1,5 @@
 {
-  "FilePath": "/home/namig/Desktop/repositorys/chat-app-signalr/chat-application.csproj",
+  "FilePath": "e:\\Bilgisayar Mühendisligi\\8.Dönem\\Ağ Programlama\\Proje\\chat-app-signalr\\chat-application.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-2.1",
     "LanguageVersion": "2.1",
@@ -2961,18 +2961,18 @@
   "RootNamespace": "chat_application",
   "Documents": [
     {
-      "FilePath": "/home/namig/Desktop/repositorys/chat-app-signalr/Views/Auth/Login.cshtml",
-      "TargetPath": "Views\\Auth\\Login.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "/home/namig/Desktop/repositorys/chat-app-signalr/Views/Administrator/Dashboard.cshtml",
+      "FilePath": "e:\\Bilgisayar Mühendisligi\\8.Dönem\\Ağ Programlama\\Proje\\chat-app-signalr\\Views\\Administrator\\Dashboard.cshtml",
       "TargetPath": "Views\\Administrator\\Dashboard.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "/home/namig/Desktop/repositorys/chat-app-signalr/Views/Auth/Register.cshtml",
+      "FilePath": "e:\\Bilgisayar Mühendisligi\\8.Dönem\\Ağ Programlama\\Proje\\chat-app-signalr\\Views\\Auth\\Register.cshtml",
       "TargetPath": "Views\\Auth\\Register.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "e:\\Bilgisayar Mühendisligi\\8.Dönem\\Ağ Programlama\\Proje\\chat-app-signalr\\Views\\Auth\\Login.cshtml",
+      "TargetPath": "Views\\Auth\\Login.cshtml",
       "FileKind": "mvc"
     }
   ],

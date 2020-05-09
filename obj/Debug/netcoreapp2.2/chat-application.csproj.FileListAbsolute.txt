@@ -48,3 +48,28 @@ E:/Example/chat-application/obj/Debug/netcoreapp2.2/Razor/Views/Auth/Register.g.
 /home/namig/Desktop/repositorys/chat-app-signalr/obj/Debug/netcoreapp2.2/chat-application.dll
 /home/namig/Desktop/repositorys/chat-app-signalr/obj/Debug/netcoreapp2.2/chat-application.pdb
 /home/namig/Desktop/repositorys/chat-app-signalr/obj/Debug/netcoreapp2.2/chat-application.csproj.CopyComplete
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\bin\Debug\netcoreapp2.2\chat-application.deps.json
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\bin\Debug\netcoreapp2.2\chat-application.runtimeconfig.json
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\bin\Debug\netcoreapp2.2\chat-application.runtimeconfig.dev.json
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\bin\Debug\netcoreapp2.2\chat-application.dll
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\bin\Debug\netcoreapp2.2\chat-application.pdb
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\bin\Debug\netcoreapp2.2\chat-application.Views.dll
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\bin\Debug\netcoreapp2.2\chat-application.Views.pdb
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.csprojAssemblyReference.cache
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.csproj.CoreCompileInputs.cache
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.RazorAssemblyInfo.cache
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.RazorAssemblyInfo.cs
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.AssemblyInfoInputs.cache
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.AssemblyInfo.cs
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.TagHelpers.input.cache
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.TagHelpers.output.cache
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.RazorCoreGenerate.cache
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\Razor\Views\Administrator\Dashboard.g.cshtml.cs
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\Razor\Views\Auth\Login.g.cshtml.cs
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\Razor\Views\Auth\Register.g.cshtml.cs
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.RazorTargetAssemblyInfo.cache
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.RazorTargetAssemblyInfo.cs
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.Views.pdb
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.dll
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.pdb
+E:\Bilgisayar Mühendisligi\8.Dönem\Ağ Programlama\Proje\chat-app-signalr\obj\Debug\netcoreapp2.2\chat-application.csproj.CopyComplete

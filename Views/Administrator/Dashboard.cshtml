@@ -42,7 +42,7 @@
           <div class='chat_list active_chat'  id='All'>
             <div class='chat_people'>
               <div class='chat_ib'>
-                <h5 style="cursor:pointer" name="SelectBroadcast" onclick="SelectBroadcast('All')">Broadcast</h5>
+                <h5 style="cursor:pointer" name="SelectBroadcast" onclick="SelectBroadcast('All')">Public Chat</h5>
               </div>
             </div>
           </div>
@@ -67,7 +67,8 @@
         @* MEMBER GROUPS *@
         <div id="groups">
           <hr/>
-                <h5>MEMBER GROUPS</h5>
+                <h5 style="display:inline;">MEMBER GROUPS</h5>
+                <img onclick="$('#modalGroup').show()" data-toggle="modal" data-target="#modalGroup" style="display:inline;width:40px;height:40px;float:right;margin-right:15px;cursor:pointer;" src="https://image.flaticon.com/icons/svg/60/60732.svg">
           <hr/>
           @foreach (var item in Model.memberGroups)
           {
@@ -75,7 +76,7 @@
               <div class='chat_people'>
                 <div class='chat_ib'>
                   <div class='chat_img'> 
-                    <img src="@Url.Content("../../../upload/" + item.Name +".png")">
+                    <img style="width:40px;height:40px;border-radius:100%;" src="https://st2.depositphotos.com/4520249/7735/v/950/depositphotos_77358214-stock-illustration-clients-public-group-icon.jpg">
                   </div>
                   <h5 style="cursor:pointer" name="SelectGroup" onclick="SelectGroup('@item.Name')"> 
                     @item.Name 
@@ -97,7 +98,7 @@
               <div class='chat_people'>
                 <div class='chat_ib'>
                   <div class='chat_img'> 
-                    <img src="@Url.Content("../../../upload/" + item.Name +".png")">
+                    <img style="width:40px;height:40px;border-radius:100%;" src="https://st2.depositphotos.com/4520249/7735/v/950/depositphotos_77358214-stock-illustration-clients-public-group-icon.jpg">
                   </div>
                   <h5> @item.Name </h5><h8 style="border-style: groove; margin-left: 5px;">private</h8>
                   <h6 style="cursor:pointer; margin-left: 10px; border: 2px;" id="JoinGroup" onclick="JoinGroup('@item.Name')">JOIN</h6>
@@ -166,6 +167,29 @@
     </div>
   </div>
   
+  <div class="modal" id="modalGroup" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Group</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/administrator/create-group" method="post">
+            <div class="form-group">
+                <input type="text" required placeholder="Group Name" class="form-control inputbox" id="GroupName" name="GroupName" /><br />
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#modalGroup').hide();">Close</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 </div></div>
 </body>
 </html>

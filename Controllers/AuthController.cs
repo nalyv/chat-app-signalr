@@ -15,13 +15,16 @@ namespace chat_application.Controllers
         private readonly UserManager<AppIdentityUser> userManager;
         private readonly SignInManager<AppIdentityUser> signInManager;
 
+        private readonly ChatDbContext chatDbContext;
         private readonly IHttpContextAccessor context;
 
-        public AuthController(UserManager<AppIdentityUser> userManager, SignInManager<AppIdentityUser> signInManager, IHttpContextAccessor context)
+        public AuthController(UserManager<AppIdentityUser> userManager, SignInManager<AppIdentityUser> signInManager,
+                              IHttpContextAccessor context, ChatDbContext chatDbContext)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.context = context;
+            this.chatDbContext = chatDbContext;
         }
 
         [Route("administrator/register")]
@@ -94,6 +97,15 @@ namespace chat_application.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        [HttpPost]
+        [Route("administrator/create-group")]
+        public async Task<IActionResult> CreateGroup(string GroupName)
+        {
+            await chatDbContext.Groups.AddAsync(new Group {Name = GroupName});
+            await chatDbContext.SaveChangesAsync();
+            return new RedirectToActionResult("Dashboard", "Administrator", new {type ="everyone", receiverName = "All"});
         }
 
     }

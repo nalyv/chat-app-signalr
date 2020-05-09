@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "/home/namig/Desktop/repositorys/chat-app-signalr/chat-application.csproj": {}
+    "E:\\Bilgisayar Mühendisligi\\8.Dönem\\Ağ Programlama\\Proje\\chat-app-signalr\\chat-application.csproj": {}
   },
   "projects": {
-    "/home/namig/Desktop/repositorys/chat-app-signalr/chat-application.csproj": {
+    "E:\\Bilgisayar Mühendisligi\\8.Dönem\\Ağ Programlama\\Proje\\chat-app-signalr\\chat-application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/namig/Desktop/repositorys/chat-app-signalr/chat-application.csproj",
+        "projectUniqueName": "E:\\Bilgisayar Mühendisligi\\8.Dönem\\Ağ Programlama\\Proje\\chat-app-signalr\\chat-application.csproj",
         "projectName": "chat-application",
-        "projectPath": "/home/namig/Desktop/repositorys/chat-app-signalr/chat-application.csproj",
-        "packagesPath": "/home/namig/.nuget/packages/",
-        "outputPath": "/home/namig/Desktop/repositorys/chat-app-signalr/obj/",
+        "projectPath": "E:\\Bilgisayar Mühendisligi\\8.Dönem\\Ağ Programlama\\Proje\\chat-app-signalr\\chat-application.csproj",
+        "packagesPath": "C:\\Users\\Oguzhan\\.nuget\\packages\\",
+        "outputPath": "E:\\Bilgisayar Mühendisligi\\8.Dönem\\Ağ Programlama\\Proje\\chat-app-signalr\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "/usr/share/dotnet/sdk/NuGetFallbackFolder"
+          "D:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "/home/namig/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Oguzhan\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp2.2"
